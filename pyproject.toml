@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "tongue-twisters"
+version = "0.1.0"
+description = "A collection of tongue-twisters"
+authors = ["Sergey Petrin <spetrin@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.109.2"
+uvicorn = "^0.27.1"
+tortoise-orm = { extras = ["asyncpg"], version = "^0.20.0" }
+aerich = "^0.7.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.aerich]
+tortoise_orm = "backend.app.config.TORTOISE_SETTINGS"
+location = "./backend/app/migrations"
+src_folder = "./."
