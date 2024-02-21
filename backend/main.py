@@ -19,7 +19,11 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-app.mount("/static", StaticFiles(directory=Path('frontend/build'), html=True), name="static")
+app.mount(
+    "/static",
+    StaticFiles(directory=Path('frontend/build'), html=True),
+    name="static",
+)
 
 register_tortoise(app, config=TORTOISE_SETTINGS)
 app.include_router(router, prefix='/api')

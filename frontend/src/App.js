@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        fetch('/api/twisters')
+            .then(response => response.json())  // Parse the response as JSON
+            .then(dataList => {
+                if (dataList && dataList.length > 0) {
+                    console.log('Returned data: ', dataList);
+                    setMessage(dataList[0].text || 'No twisters :(');
+                } else {
+                    console.error('Empty or invalid data received from the API');
+                    // Set a default message or handle the case when data is empty
+                    setMessage("Default Message");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }, []);
+
+    return (
+        <div className="App">
+            <h1>{message}</h1>
+        </div>
+    );
 }
 
 export default App;
